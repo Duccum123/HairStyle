@@ -1,0 +1,118 @@
+.camera-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+#video {
+    width: 100%;
+    display: block;
+    transform: scaleX(-1);
+}
+
+#canvas {
+    display: none;
+}
+
+.capture-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.capture-btn:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.result-card {
+    transition: all 0.5s ease;
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.result-card.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.loading-spinner {
+    display: none;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #6366f1;
+    animation: spin 1s ease-in-out infinite;
+}
+
+
+#resultSection {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+#resultSection h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+#resultSection img {
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 12px;
+}
+
+#predictedLabel {
+    font-weight: bold;
+    font-size: 20px;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+/* Hiệu ứng fadeIn */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+}

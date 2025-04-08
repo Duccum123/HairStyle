@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hairstyle Advisor | Find Your Perfect Look</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-cut text-3xl mr-3"></i>
+                    <h1 class="text-2xl font-bold">StyleGenius</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-8">
+                        <li><a href="#" class="hover:underline">Home</a></li>
+                        <li><a href="#how-it-works" class="hover:underline">How It Works</a></li>
+                        <li><a href="#trending" class="hover:underline">Trending</a></li>
+                        <li><a href="#about" class="hover:underline">About</a></li>
+                    </ul>
+                </nav>
+                <button class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="mt-16 mb-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Discover Your Perfect Hairstyle</h2>
+                <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
+                    AI-powered hairstyle recommendations tailored to your unique facial features
+                </p>
+                <button id="tryNowBtn" class="mt-8 bg-white text-indigo-600 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition-all">
+                    Try It Now <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Camera Section -->
+        <section id="cameraSection" class="py-16 px-4 hidden">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Capture Your Look</h2>
+                
+                <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
+                    <div class="w-full lg:w-1/2">
+                        <div class="camera-container bg-black">
+                            <video id="video" autoplay playsinline></video>
+                            <canvas id="canvas"></canvas>
+                            <button id="captureBtn" class="capture-btn"></button>
+                        </div>
+                        <div class="mt-6 flex justify-center space-x-4">
+                            <button id="retakeBtn" class="px-6 py-2 border border-gray-300 rounded-full text-gray-700 hidden">
+                                <i class="fas fa-redo mr-2"></i> Retake
+                            </button>
+                            <button id="analyzeBtn" class="px-6 py-2 bg-indigo-600 text-white rounded-full hidden">
+                                <i class="fas fa-magic mr-2"></i> Analyze
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-1/2">
+                        <div id="photoPreview" class="hidden mb-6">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-700">Your Photo</h3>
+                            <img id="previewImg" src="" alt="Captured photo" class="w-full max-w-md rounded-lg shadow-lg">
+                        </div>
+                        
+                        <div id="loadingSection" class="hidden flex-col items-center justify-center py-12">
+                            <div class="loading-spinner mb-4"></div>
+                            <p class="text-gray-600">Analyzing your facial features...</p>
+                        </div>
+                        
+                        <div id="privacyNote" class="bg-indigo-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-indigo-800 mb-2">
+                                <i class="fas fa-lock mr-2"></i> Privacy First
+                            </h3>
+                            <p class="text-gray-600">
+                                Your photo is processed securely and never stored permanently. We use advanced AI to analyze facial features and recommend hairstyles without compromising your privacy.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="resultSection" class="hidden">
+            <h3>Kết quả:</h3>
+            <img id="resultImg" src="" alt="Kết quả phân tích" style="max-width: 100%;">
+            <p id="predictedLabel"></p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="py-16 px-4 hidden">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Your Perfect Hairstyles</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12" id="hairstyleResults">
+                    <!-- Results will be populated here by JavaScript -->
+                </div>
+                
+                <div class="text-center mt-8">
+                    <button id="tryAgainBtn" class="px-6 py-2 border border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-50">
+                        <i class="fas fa-camera mr-2"></i> Try Another Photo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="py-16 px-4 bg-gray-100">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">How It Works</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-camera text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">1. Take a Photo</h3>
+                        <p class="text-gray-600">
+                            Use your camera to capture a clear photo of your face. Make sure your face is well-lit and visible.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-brain text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">2. AI Analysis</h3>
+                        <p class="text-gray-600">
+                            Our advanced AI analyzes your facial structure, hair type, and features to determine what suits you best.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-cut text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">3. Get Recommendations</h3>
+                        <p class="text-gray-600">
+                            Receive personalized hairstyle recommendations along with styling tips and maintenance advice.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Hairstyles -->
+        <section id="trending" class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Trending Hairstyles</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="trendingArticles">
+                    <!-- Articles will be populated here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 px-4 bg-gray-100">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">About StyleGenius</h2>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <p class="text-gray-600 mb-6">
+                        StyleGenius uses cutting-edge artificial intelligence to analyze facial features and recommend hairstyles that complement your unique look. Our technology considers face shape, hair texture, and current trends to provide personalized suggestions.
+                    </p>
+                    
+                    <p class="text-gray-600 mb-6">
+                        Whether you're looking for a dramatic change or just a subtle refresh, our AI-powered recommendations can help you discover styles you'll love. We also keep you updated with the latest trends and styling techniques from top hairstylists worldwide.
+                    </p>
+                    
+                    <div class="flex justify-center mt-8">
+                        <button class="px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700">
+                            Learn More About Our Technology
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">StyleGenius</h3>
+                    <p class="text-gray-400">
+                        AI-powered hairstyle recommendations for everyone.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#trending" class="text-gray-400 hover:text-white">Trending</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white">About</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 StyleGenius. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="/static/artical.js"></script>
+    <script type="module" src="/static/hairStyle.js"></script>
+    <script type="module" src="/static/script.js"></script>
+       
+    </script>
+</body>
+</html>
